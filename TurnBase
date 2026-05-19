@@ -1,0 +1,5 @@
+public class TurnBase {
+    private Player player;
+    private int currentTurn, round;
+    private boolean isActive;
+}
