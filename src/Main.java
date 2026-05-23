@@ -2,20 +2,33 @@ import javax.swing.JFrame;
 
 public class Main {
 
+    private static JFrame window;
+
     public static void main(String[] args) {
+        initWindow();
+        startGame();
+    }
 
-        JFrame frame = new JFrame("Jogo");
+    // ===== inicializa janela =====
+    private static void initWindow() {
 
-        GamePanel panel = new GamePanel();
+        window = new JFrame("JavaRunner");
 
-        frame.add(panel);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+    }
 
-        frame.pack();
+    // ===== inicia o jogo =====
+    private static void startGame() {
 
-        frame.setLocationRelativeTo(null);
+        GamePanel gamePanel = new GamePanel();
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.add(gamePanel);
 
-        frame.setVisible(true);
+        window.pack();
+
+        window.setLocationRelativeTo(null);
+
+        window.setVisible(true);
     }
 }
