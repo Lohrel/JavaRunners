@@ -1,5 +1,5 @@
 public interface IInteractable
 {
-    public score;
+    public int score = 0;
     public void onInteract();
 }

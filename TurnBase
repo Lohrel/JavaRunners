@@ -1,5 +1,5 @@
 public class TurnBase {
-    private Player player;
+    private PlayerModel playerModel;
     private int currentTurn, round;
     private boolean isActive;
 }

@@ -3,29 +3,27 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
 public class GamePanel extends JPanel implements Runnable, KeyListener {
+
+
+
 
     // ===== THREAD =====
     private Thread gameThread;
 
-    // ===== PLAYER (antes variáveis soltas) =====
-    private float playerX;
-    private float playerY;
-    private float velocityY;
-
-    private float width = 50;
-    private float height = 50;
-
+    private Player player;
     private float gravity = 0.5f;
-    private float jumpStrength = -10;
+
 
     private boolean onGround;
 
     // ===== CHÃO =====
     private float groundY = 300;
 
-    public GamePanel() {
+    public GamePanel(PlayerModel playerModel) {
 
+        this.player = new Player(playerModel);
         this.setPreferredSize(new Dimension(800, 400));
         this.setBackground(Color.BLACK);
 
@@ -39,10 +37,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     // ===== "spawn" estilo Enemy =====
     private void spawnPlayer(float startX, float startY) {
-        this.playerX = startX;
-        this.playerY = startY;
-        this.velocityY = 0;
-        this.onGround = false;
+        player.x = startX;
+        player.y = startY;
+        player.velocitY = 0;
+        player.isOnGround = false;
     }
 
     // ===== GAME LOOP =====
@@ -76,28 +74,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     // ===== FÍSICA =====
     private void applyPhysics() {
-        velocityY += gravity;
-        playerY += velocityY;
+
+        player.y += player.velocitY;
+        player.velocitY += gravity;
     }
 
     // ===== COLISÃO COM CHÃO =====
     private void checkGroundCollision() {
 
-        if (playerY >= groundY) {
-            playerY = groundY;
-            velocityY = 0;
+        if (player.y >= groundY) {
+            player.y = groundY;
+            player.velocitY = 0;
             onGround = true;
         }
     }
-
-    // ===== PULO =====
-    private void jump() {
-        if (onGround) {
-            velocityY = jumpStrength;
-            onGround = false;
-        }
-    }
-
     // ===== RENDER =====
     @Override
     protected void paintComponent(Graphics g) {
@@ -108,15 +98,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
         // chão
         g2.setColor(Color.WHITE);
-        g2.fillRect(0, (int) groundY + (int) height, 800, 10);
+        g2.fillRect(0, (int) groundY + (int) player.height, 800, 10);
 
         // player
         g2.setColor(Color.GREEN);
         g2.fillOval(
-                (int) playerX,
-                (int) playerY,
-                (int) width,
-                (int) height
+                (int) player.x,
+                (int) player.y,
+                (int) player.width,
+                (int) player.height
         );
 
         g2.dispose();
@@ -127,7 +117,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            jump();
+            player.Jump();
         }
     }
 

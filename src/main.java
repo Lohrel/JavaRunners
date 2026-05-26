@@ -1,6 +1,6 @@
 import javax.swing.JFrame;
 
-public class Main {
+public class main {
 
     private static JFrame window;
 
@@ -21,7 +21,10 @@ public class Main {
     // ===== inicia o jogo =====
     private static void startGame() {
 
-        GamePanel gamePanel = new GamePanel();
+
+        PlayerModel playerModel = new PlayerModel();
+
+        GamePanel gamePanel = new GamePanel(playerModel);
 
         window.add(gamePanel);
 
