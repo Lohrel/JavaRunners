@@ -5,11 +5,16 @@ public class main {
     private static JFrame window;
 
     public static void main(String[] args) {
+
         initWindow();
-        startGame();
+
+        GamePanel gamePanel = startGame();
+
+        window.setVisible(true);
+
+        gamePanel.requestFocusInWindow();
     }
 
-    // ===== inicializa janela =====
     private static void initWindow() {
 
         window = new JFrame("JavaRunner");
@@ -18,9 +23,7 @@ public class main {
         window.setResizable(false);
     }
 
-    // ===== inicia o jogo =====
-    private static void startGame() {
-
+    private static GamePanel startGame() {
 
         PlayerModel playerModel = new PlayerModel();
 
@@ -32,6 +35,6 @@ public class main {
 
         window.setLocationRelativeTo(null);
 
-        window.setVisible(true);
+        return gamePanel;
     }
 }
