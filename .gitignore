@@ -1,0 +1,11 @@
+# Java compilado
+*.class
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Arquivos de sistema
+.DS_Store
+Thunbs.db

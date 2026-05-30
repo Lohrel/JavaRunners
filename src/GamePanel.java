@@ -31,7 +31,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private ArrayList<Cloud> clouds = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Random random = new Random();
+
+    private int enemySpawnTimer = 0;
+    private final int spawnInterval = 120; // Aproximadamente a cada 2 segundos
 
     public GamePanel(PlayerModel playerModel) {
 
@@ -120,6 +124,41 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 c.speed = 1 + random.nextFloat() * 1.5f;
             }
         }
+
+        // ===== inimigos =====
+        updateEnemies();
+    }
+
+    private void updateEnemies() {
+        // Spawn de inimigos
+        enemySpawnTimer++;
+        if (enemySpawnTimer >= spawnInterval) {
+            spawnEnemy();
+            enemySpawnTimer = 0;
+        }
+
+        // Update e remoção de inativos
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            e.update();
+            if (!e.isActive()) {
+                enemies.remove(i);
+                i--;
+            }
+        }
+    }
+
+    private void spawnEnemy() {
+        Enemy newEnemy;
+        if (random.nextBoolean()) {
+            newEnemy = new GroundEnemy();
+            newEnemy.spawn(850, groundY, groundSpeed);
+        } else {
+            newEnemy = new FlyingEnemy();
+            // Spawna entre altura 150 e 250
+            newEnemy.spawn(850, 150 + random.nextInt(100), groundSpeed + 1);
+        }
+        enemies.add(newEnemy);
     }
 
     // ===== física =====
@@ -170,6 +209,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         for (int x = groundOffset; x < getWidth(); x += 40) {
 
             g2.drawLine(x, (int) groundY, x, getHeight());
+        }
+
+        // ===== inimigos =====
+        for (Enemy e : enemies) {
+            e.draw(g2);
         }
 
         // ===== player =====
