@@ -6,8 +6,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 abstract class Enemy {
-    protected int Health;
-    protected float Speed;
+    protected int health;
+    protected float speed;
     // x e y definem a posição da sprite dos inimigos.
     protected float x;
     protected float y;
@@ -42,13 +42,13 @@ abstract class Enemy {
     public void spawn(float startX, float startY, float startSpeed) {
         this.x = startX;
         this.y = startY;
-        this.Speed = startSpeed;
+        this.speed = startSpeed;
         this.active = true;
     }
     // update serve para mover os inimigos para esquerda até sumirem do campo de visão
     public void update() {
         if (active) {
-            this.x -= Speed;
+            this.x -= speed;
             if (this.x < -100) {
                 this.active = false;
             }

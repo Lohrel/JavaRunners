@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 
 public class main {
 
+
     private static JFrame window;
 
     public static void main(String[] args) {
