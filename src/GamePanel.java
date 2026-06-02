@@ -21,12 +21,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     // ===== nuvens =====
     private class Cloud {
         float x, y;
+        float startY;
         float speed;
+        private float oscillationTimer;
 
         Cloud(float x, float y, float speed) {
             this.x = x;
             this.y = y;
             this.speed = speed;
+            this.oscillationTimer = random.nextFloat() * (float) Math.PI * 2;
         }
     }
 
@@ -66,7 +69,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     // ===== nuvens iniciais =====
     private void spawnClouds() {
-
         for (int i = 0; i < 5; i++) {
 
             clouds.add(new Cloud(
@@ -117,10 +119,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         for (Cloud c : clouds) {
 
             c.x -= c.speed;
+            c.oscillationTimer += 0.02f;
+            c.y = c.startY + (float) Math.sin(c.oscillationTimer) * 15;
 
             if (c.x < -60) {
                 c.x = 800 + random.nextInt(200);
                 c.y = random.nextInt(120);
+                c.startY = c.y;
                 c.speed = 1 + random.nextFloat() * 1.5f;
             }
         }
