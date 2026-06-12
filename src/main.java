@@ -9,11 +9,11 @@ public class main {
 
         initWindow();
 
-        GamePanel gamePanel = startGame();
+        MenuPanel menuPanel = startGame();
 
         window.setVisible(true);
 
-        gamePanel.requestFocusInWindow();
+        menuPanel.requestFocusInWindow();
     }
 
     private static void initWindow() {
@@ -24,18 +24,18 @@ public class main {
         window.setResizable(false);
     }
 
-    private static GamePanel startGame() {
+    private static MenuPanel startGame() {
 
         PlayerModel playerModel = new PlayerModel();
+        MenuPanel menuPanel = new MenuPanel(playerModel);
 
-        GamePanel gamePanel = new GamePanel(playerModel);
 
-        window.add(gamePanel);
+        window.add(menuPanel);
 
         window.pack();
 
         window.setLocationRelativeTo(null);
 
-        return gamePanel;
+        return menuPanel;
     }
 }
