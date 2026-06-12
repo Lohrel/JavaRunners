@@ -19,11 +19,7 @@ abstract class Enemy {
     protected Image sprite;
 
     public void loadSprite(String imagePath) {
-        try {
-            this.sprite = ImageIO.read(getClass().getResourceAsStream(imagePath));
-        } catch (IOException | IllegalArgumentException e) {
-            System.err.println("Erro ao carregar a imagem: " + imagePath);
-        }
+            this.sprite = SpriteCache.getSprite(imagePath);
     }
 
     public void draw(Graphics g) {
